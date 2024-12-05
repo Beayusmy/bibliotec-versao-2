@@ -1,0 +1,75 @@
+<main class="container-main">
+    <div class="box-conteudo">
+        <h1>Editar o Livro</h1>
+        <form method="post" action="@Url.Action("Atualizar", new {id = ViewBag.Livro.LivroID})" enctype="multipart/form-data">
+            <div class="form-linha">
+                <div class="form-group-name">
+                    <label class="form-label" for="Nome">Nome</label>
+                    <input type="text" name="Nome" class="form-input" placeholder=""value="@ViewBag.Livro.Nome">
+                </div>
+
+                <div class="form-upload">
+                    <label class="form-label" for="Imagem">Foto</label>
+                    <div class="input-foto">
+                        <input type="file" name="Imagem" value="@ViewBag.Livro.Imagem">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-linha">
+                <div class="form-group">
+                    <label class="form-label" for="Escritor">Escritor</label>
+                    <input type="text" name="Escritor" class="form-input" placeholder="" value="@ViewBag.Livro.Escritor">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="Idioma">Idioma</label>
+                    <input type="text" name="Idioma" class="form-input" placeholder=""value="@ViewBag.Livro.Idioma">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Editora">Editora</label>
+                    <input type="text" name="Editora" class="form-input" placeholder=""value="@ViewBag.Livro.Editora">
+                </div>
+            </div>
+
+            <div class="form-linha">
+                <div class="form-group">
+                    <label class="form-label" for="categoria">Categoria</label>
+                    <ul>
+                        @*Percorrer TODAS as categorias do meu sistema *@
+                        @foreach(var categorias in ViewBag.CategoriasDosistema){ 
+                        @*Percorrer as categoriasDoLivro e verificara qual pertence ao livro selecionado*@
+                        bool checkSave = false;
+                        @foreach(var categoriaDoLivro in ViewBag.Categoria){
+                            //verificacao se o id da categoria Acao pertence ao Livro Selecionado
+                            //Por exemplo:
+                            //A categoria açao esta presente na categorias do livro???
+                            if(categoriaDoLivro.CategoriaID == categorias.CategoriaID){
+                                //E VERDADE
+                                checkSave = true;
+                                break;
+                            }
+                        }
+                        <li>
+                            <input name="Categoria" type="checkbox" value="@categorias.CategoriaID" checked="@(checkSave ? "checked" : null)">
+                            <label class="form-label-categoria" for="Categoria">@categorias.Nome</label>
+                        </li>
+                       }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-linha">
+                <div class="form-group">
+                    <label class="form-label" for="Descricao">Descrição</label>
+                    <textarea type="text" name="Descricao"
+                        class="form-input form-descricao">@ViewBag.Livro.Descricao</textarea>
+                </div>
+            </div>
+
+            <div class="btn-div">
+                <button type="submit" class="btn btn-cadastrar">Editar</button>
+            </div>
+        </form>
+    </div>
+</main>
